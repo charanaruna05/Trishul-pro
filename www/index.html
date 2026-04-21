@@ -1,1 +1,291 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,viewport-fit=cover"/>
+<title>🔱 TRINETRAA PRO</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
 
+<!-- ═══ LOGIN PAGE ═══ -->
+<div class="page active" id="pg-login">
+  <div class="login-wrap">
+    <div class="login-logo">
+      <div class="t1">🔱 TRINETRAA</div>
+      <div class="t2">PRO MASTER SYSTEM v2.0</div>
+      <div class="sep"></div>
+    </div>
+    <input class="finput" id="l-user" type="text" placeholder="Username" autocomplete="off"/>
+    <input class="finput" id="l-pass" type="password" placeholder="Password"/>
+    <button class="login-btn" onclick="doLogin()">LOGIN →</button>
+    <div class="login-err" id="l-err"></div>
+    <div class="login-hint">10 Brokers | 9 Scanners | Live Data</div>
+  </div>
+</div>
+
+<!-- ═══ HOME PAGE ═══ -->
+<div class="page" id="pg-home">
+  <div class="live-bar">
+    <div class="live-dot" id="live-dot"></div>
+    <span class="live-txt" id="live-txt">CONNECTING</span>
+    <span class="last-ref" id="last-ref">--:--:--</span>
+  </div>
+  <div class="news-ticker">
+    <marquee scrollamount="4" id="ticker-text">🔱 TRINETRAA PRO: LOADING LIVE DATA...</marquee>
+  </div>
+  <div class="home-header"><div class="logo">🔱 TRINETRAA 🔱</div></div>
+  <div class="top-stats">
+    <div class="stat-box"><span class="stat-label">NIFTY 50</span><span class="stat-val" id="h-nifty">24,520</span></div>
+    <div class="stat-box"><span class="stat-label">SENSEX</span><span class="stat-val" id="h-sensex">81,230</span></div>
+    <div class="stat-box"><span class="stat-label">GOLD</span><span class="stat-val" id="h-gold">$2,350</span></div>
+    <div class="stat-box profile-link" onclick="goPage('control')">
+      <span class="stat-label" style="color:var(--gold)">PROFILE</span>
+      <span class="stat-val">👤</span>
+    </div>
+  </div>
+  <div class="entry-section">
+    <div class="entry-card">
+      <div class="entry-row">
+        <div class="symbol" style="cursor:pointer" onclick="openChart('NIFTY',24520)">NIFTY</div>
+        <div class="p-chip"><div class="p-label">OPEN</div><div class="p-val">24,480</div></div>
+        <div class="p-chip"><div class="p-label">HIGH</div><div class="p-val">24,610</div></div>
+        <div class="p-chip"><div class="p-label">LOW</div><div class="p-val">24,390</div></div>
+        <div class="p-chip"><div class="p-label">PREV</div><div class="p-val">24,410</div></div>
+      </div>
+      <div class="entry-row">
+        <div class="symbol" style="cursor:pointer" onclick="openChart('BANKNIFTY',48236)">BANKNIFTY</div>
+        <div class="p-chip"><div class="p-label">OPEN</div><div class="p-val">48,100</div></div>
+        <div class="p-chip"><div class="p-label">HIGH</div><div class="p-val">48,500</div></div>
+        <div class="p-chip"><div class="p-label">LOW</div><div class="p-val">47,950</div></div>
+        <div class="p-chip"><div class="p-label">PREV</div><div class="p-val">47,880</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="sector-section">
+    <div class="sector-grid" id="sectorGrid"></div>
+  </div>
+  <!-- Sector Sheet -->
+  <div class="sheet" id="sectorSheet">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <b id="sheetTitle" style="color:var(--gold);font-size:14px;"></b>
+      <button class="done-btn" onclick="closeSheet('sectorSheet')">DONE</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div><div style="color:var(--green);font-size:10px;font-weight:900;margin-bottom:6px;">📈 BUY STOCKS</div><ul id="buyList" style="color:#ccc;font-size:11px;padding-left:4px;list-style:none;"></ul></div>
+      <div><div style="color:var(--red);font-size:10px;font-weight:900;margin-bottom:6px;">📉 SELL STOCKS</div><ul id="sellList" style="color:#ccc;font-size:11px;padding-left:4px;list-style:none;"></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SIGNAL PAGE ═══ -->
+<div class="page" id="pg-signal">
+  <div class="sig-hdr"><h1>⚡ TRISHUL DASHBOARD</h1></div>
+  <div class="signal-grid">
+    <div class="row-3">
+      <div class="sigbox" onclick="openSigDetail('STOCK SECURE')"><i class="fa fa-shield-alt"></i><div class="b-lbl">STOCK SECURE</div><div class="b-val">METER</div></div>
+      <div class="sigbox" onclick="openSigDetail('INDEX METER')"><i class="fa fa-chart-bar"></i><div class="b-lbl">INDEX METER</div><div class="b-val">LIVE</div></div>
+      <div class="sigbox" onclick="openSigDetail('VOLUME METER')"><i class="fa fa-water"></i><div class="b-lbl">VOLUME MTR</div><div class="b-val">ACTIVE</div></div>
+    </div>
+    <div class="row-3">
+      <div class="sigbox" onclick="openSigDetail('TIMEFRAME METER')"><i class="fa fa-clock"></i><div class="b-lbl">TIMEFRAME</div><div class="b-val">METER</div></div>
+      <div class="sigbox split-box">
+        <div class="split-half" onclick="openSigDetail('BRAHMASTRA')"><i class="fa fa-crosshairs" style="font-size:16px;color:var(--gold);"></i><div class="b-lbl" style="font-size:6px;">BRAHMASTRA</div></div>
+        <div class="split-sep"></div>
+        <div class="split-half" onclick="openSigDetail('SUDARSHAN')"><i class="fa fa-circle-notch" style="font-size:16px;color:var(--gold);"></i><div class="b-lbl" style="font-size:6px;">SUDARSHAN</div></div>
+      </div>
+      <div class="sigbox split-box">
+        <div class="split-half" onclick="openSigDetail('TRISHUL')"><div style="font-size:18px;">🔱</div><div class="b-lbl" style="font-size:6px;">TRISHUL</div></div>
+        <div class="split-sep"></div>
+        <div class="split-half" onclick="openSigDetail('ALL-IN-ONE')"><div style="font-size:18px;">🎯</div><div class="b-lbl" style="font-size:6px;">ALL-IN-ONE</div></div>
+      </div>
+    </div>
+    <div class="row-3">
+      <div class="sigbox" onclick="openSigDetail('INDEX SCAN')"><i class="fa fa-search-dollar"></i><div class="b-lbl">INDEX SCAN</div><div class="b-val">NSE/BSE</div></div>
+      <div class="sigbox" onclick="openSigDetail('SCALE STRATEGY')"><i class="fa fa-layer-group"></i><div class="b-lbl">SCALE</div><div class="b-val">STRATEGY</div></div>
+      <div class="sigbox" onclick="goPage('scanner')"><div style="font-size:22px;">🔍</div><div class="b-lbl">9 SCANNERS</div><div class="b-val">VIEW ALL</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SIGNAL DETAIL PAGE ═══ -->
+<div class="page" id="pg-sig-detail">
+  <div class="info-header">
+    <h2 id="sig-title">SIGNAL</h2>
+    <div class="stats-row">
+      <div><div style="font-size:9px;color:#888;">BUY</div><div style="color:var(--green);font-weight:900;font-size:18px;" id="b-cnt">0</div></div>
+      <div><div style="font-size:9px;color:#888;">SELL</div><div style="color:var(--red);font-weight:900;font-size:18px;" id="s-cnt">0</div></div>
+    </div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding-top:4px;" id="sig-list"></div>
+  <button class="btn-back" onclick="history.back()">← BACK</button>
+</div>
+
+<!-- ═══ SCANNER PAGE ═══ -->
+<div class="page" id="pg-scanner">
+  <div class="sig-hdr"><h1>🔍 9 POWER SCANNERS</h1></div>
+  <div class="scanner-grid" id="scanner-grid"></div>
+</div>
+
+<!-- ═══ WATCHLIST PAGE ═══ -->
+<div class="page" id="pg-watch">
+  <div class="top-patti">📋 WATCHLIST</div>
+  <div class="wl-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-sr">#</th>
+          <th class="col-stock">STOCK</th>
+          <th class="col-price">PRICE</th>
+          <th class="col-sec">SEC</th>
+          <th class="col-scan">SCAN</th>
+          <th class="col-sig">SIGNAL</th>
+          <th class="col-scr">SCR</th>
+        </tr>
+      </thead>
+      <tbody id="wl-body"></tbody>
+    </table>
+  </div>
+  <!-- Stock Popup -->
+  <div id="wl-popup">
+    <span class="close-btn" onclick="closeWlPopup()">✕</span>
+    <div style="color:var(--gold);font-weight:900;font-size:14px;" id="popup-name">STOCK</div>
+    <div style="color:white;font-size:20px;font-weight:900;margin-top:4px;" id="popup-price">₹0</div>
+    <div class="popup-grid">
+      <div class="data-card">Open<span class="val" style="color:white;">₹2,450</span></div>
+      <div class="data-card">High<span class="val" style="color:var(--green);">₹2,510</span></div>
+      <div class="data-card">Low<span class="val" style="color:var(--red);">₹2,430</span></div>
+      <div class="data-card">Volume<span class="val" style="color:var(--gold);">8.2M</span></div>
+      <div class="data-card">Signal<span class="val" style="color:var(--green);">BUY</span></div>
+      <div class="data-card">Score<span class="val" style="color:var(--accent);">82%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CHART PAGE ═══ -->
+<div class="page" id="pg-chart">
+  <div id="chart-hdr">
+    <div class="cht">
+      <span id="c-sym">RELIANCE</span>
+      <span id="c-ltp">2985.00</span>
+      <span id="c-chg">▲ +0.00%</span>
+    </div>
+    <div class="clegs">
+      <div class="cleg"><div class="cll" style="background:#c8901e"></div><span style="color:#888">FUSION</span><span style="color:#c8901e;margin-left:3px;font-weight:900;" id="v-f">—</span></div>
+      <div class="cleg"><div class="cll" style="background:#b0c8ff;border-style:dashed"></div><span style="color:#888">VWAP</span><span style="color:#b0c8ff;margin-left:3px;font-weight:900;" id="v-vw">—</span></div>
+    </div>
+  </div>
+  <div id="tf-row">
+    <button class="tf" onclick="setTF(this,'1m')">1m</button>
+    <button class="tf" onclick="setTF(this,'5m')">5m</button>
+    <button class="tf on" onclick="setTF(this,'10m')">10m</button>
+    <button class="tf" onclick="setTF(this,'15m')">15m</button>
+    <button class="tf" onclick="setTF(this,'1h')">1h</button>
+    <button class="tf" onclick="setTF(this,'1D')">1D</button>
+  </div>
+  <div id="main-wrap"><svg id="main-svg"></svg></div>
+  <div id="zoom-bar">
+    <span id="zlbl">ZOOM 1×</span>
+    <div class="zb" id="zb-p" onclick="doZoom(1)">+</div>
+    <div class="zb" id="zb-m" onclick="doZoom(-1)">−</div>
+  </div>
+  <div id="ind-sec"><div id="ind-grid"></div></div>
+</div>
+
+<!-- ═══ BROKER PAGE ═══ -->
+<div class="page" id="pg-broker">
+  <div class="broker-hdr"><h1>🔗 10 BROKER CONNECT</h1></div>
+  <div class="broker-list" id="broker-list"></div>
+</div>
+
+<!-- ═══ PROFILE/CONTROL PAGE ═══ -->
+<div class="page" id="pg-control">
+  <div class="ctrl-body">
+    <div class="prof-card">
+      <div class="info-group">
+        <div class="id-label">🔱 Charan007</div>
+        <div class="phone-email">Trinetraa Pro Master</div>
+        <div class="phone-email" style="color:var(--green);font-size:.7rem;">✅ Active</div>
+      </div>
+      <button class="mode-btn" id="mode-btn" onclick="toggleMode()">LIGHT</button>
+    </div>
+    <div class="summary-card">
+      <div class="ptabs">
+        <button class="ptab on" onclick="setPnl(this,'1D')">TODAY</button>
+        <button class="ptab" onclick="setPnl(this,'1W')">1 WEEK</button>
+        <button class="ptab" onclick="setPnl(this,'1M')">1 MONTH</button>
+      </div>
+      <div class="pnl-row"><span style="font-size:.8rem;opacity:.8;">P&L</span><span class="pnl-value" id="pnl-val">+₹12,450</span></div>
+      <div class="bot-stats">Trades: <b id="pnl-tr">14</b> | Accuracy: <b id="pnl-ac">78%</b></div>
+    </div>
+    <div class="ctrl-grid">
+      <div class="edit-item"><span class="item-name">🔗 Broker Manager</span><button class="change-btn" onclick="goPage('broker')">MANAGE</button></div>
+      <div class="edit-item"><span class="item-name">🔍 Scanners</span><button class="change-btn" onclick="goPage('scanner')">VIEW ALL</button></div>
+      <div class="edit-item"><span class="item-name">🔑 Change Password</span><button class="change-btn" onclick="startChangePassword()">CHANGE</button></div>
+      <div class="edit-item"><span class="item-name">📊 Watchlist</span><button class="change-btn" onclick="goPage('watch')">MANAGE</button></div>
+    </div>
+    <button class="exit-btn" onclick="doLogout()">🚪 LOGOUT</button>
+  </div>
+</div>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav id="bnav" class="hidden">
+  <button class="nb on" id="nb-home" onclick="goPage('home')"><div class="ni">🏠</div><div class="nt">HOME</div></button>
+  <button class="nb" id="nb-signal" onclick="goPage('signal')"><div class="ni">⚡</div><div class="nt">SIGNALS</div></button>
+  <button class="nb" id="nb-scanner" onclick="goPage('scanner')"><div class="ni">🔍</div><div class="nt">SCAN</div></button>
+  <button class="nb" id="nb-watch" onclick="goPage('watch')"><div class="ni">📋</div><div class="nt">WATCH</div></button>
+  <button class="nb" id="nb-chart" onclick="goPage('chart')"><div class="ni">📈</div><div class="nt">CHART</div></button>
+  <button class="nb" id="nb-broker" onclick="goPage('broker')"><div class="ni">🔗</div><div class="nt">BROKER</div></button>
+  <button class="nb" id="nb-control" onclick="goPage('control')"><div class="ni">👤</div><div class="nt">PROFILE</div></button>
+</nav>
+
+<!-- ═══ BROKER MODAL ═══ -->
+<div id="broker-modal">
+  <div class="bm-box"><div id="bm-box-content"></div></div>
+</div>
+
+<!-- ═══ OTP MODAL ═══ -->
+<div id="otp-modal">
+  <div class="otp-box">
+    <div class="otp-title">🔐 CHANGE PASSWORD</div>
+    <div class="otp-step show" id="otp-s1">
+      <input class="otp-input" id="cur-pwd" type="password" placeholder="Current Password"/>
+      <button class="otp-btn" onclick="verifyCurPwd()">VERIFY →</button>
+      <div class="otp-msg" id="s1-msg"></div>
+      <button class="otp-cancel" onclick="closeOtpModal()">Cancel</button>
+    </div>
+    <div class="otp-step" id="otp-s2">
+      <div class="otp-display">
+        <div class="otp-code" id="otp-show">------</div>
+        <small>Your OTP • Expires in: <b id="otp-timer">60s</b></small>
+      </div>
+      <input class="otp-input" id="otp-enter" type="text" placeholder="Enter OTP" maxlength="6"/>
+      <button class="otp-btn" onclick="verifyOtp()">VERIFY OTP →</button>
+      <div class="otp-msg" id="s2-msg"></div>
+      <button class="otp-cancel" onclick="closeOtpModal()">Cancel</button>
+    </div>
+    <div class="otp-step" id="otp-s3">
+      <input class="otp-input" id="new-pwd1" type="password" placeholder="New Password"/>
+      <input class="otp-input" id="new-pwd2" type="password" placeholder="Confirm Password"/>
+      <button class="otp-btn" onclick="setNewPassword()">SET PASSWORD →</button>
+      <div class="otp-msg" id="s3-msg"></div>
+      <button class="otp-cancel" onclick="closeOtpModal()">Cancel</button>
+    </div>
+    <div class="otp-step" id="otp-s4">
+      <div style="text-align:center;padding:20px 0;">
+        <div style="font-size:40px;">✅</div>
+        <div style="color:var(--green);font-weight:900;margin-top:10px;">Password Changed!</div>
+      </div>
+      <button class="otp-btn" onclick="closeOtpModal()">DONE ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ JAVASCRIPT FILES ═══ -->
+<script src="js/config.js"></script>
+<script src="js/live.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
