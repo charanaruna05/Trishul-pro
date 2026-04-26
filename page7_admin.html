@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🔱 Trishul Pro — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:'Rajdhani',sans-serif;}
+:root{--gold:#f5c518;--gold2:#c9a000;--bg:#000;--bg2:#0a0a0a;--bg3:#121212;--bg4:#1a1a1a;--border:#222;--bordergold:#3d3000;--text:#eee;--dim:#888;--green:#00c853;--red:#ff3d3d;--orange:#ff6d00;--blue:#1976d2;}
+html,body{height:100%;background:var(--bg);color:var(--text);overflow:hidden;}
+.phone-frame{width:100%;max-width:430px;height:100vh;margin:0 auto;display:flex;flex-direction:column;background:var(--bg);border:2px solid var(--gold);overflow:hidden;position:relative;}
+.ad-header{flex-shrink:0;background:var(--bg2);border-bottom:2px solid var(--gold);padding:10px 14px;text-align:center;}
+.ad-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;color:var(--gold);letter-spacing:2.5px;}
+/* CONTENT */
+.ad-content{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:8px;scrollbar-width:none;}
+.ad-content::-webkit-scrollbar{display:none;}
+/* PROFILE */
+.profile-card{background:var(--bg2);border:1px solid var(--gold);padding:12px;}
+.pr-left-wrap{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.pr-avatar{width:54px;height:54px;background:linear-gradient(135deg,var(--gold2),var(--gold));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#000;font-family:'Orbitron',sans-serif;position:relative;flex-shrink:0;}
+.active-dot{position:absolute;bottom:-3px;right:-3px;width:12px;height:12px;background:var(--green);border-radius:50%;border:2px solid var(--bg2);}
+.pr-info{flex:1;min-width:0;}
+.pr-id{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;color:var(--gold);letter-spacing:1.5px;}
+.pr-status{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--dim);letter-spacing:1px;margin-top:2px;}
+.active-ldot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 1s infinite;flex-shrink:0;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.pr-contact{font-size:11px;color:var(--dim);margin-top:3px;}
+.pr-row-btns{display:flex;gap:6px;}
+.theme-btn{flex:1;background:var(--bg3);border:1px solid var(--bordergold);color:var(--gold);padding:8px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:1px;}
+/* PNL */
+.pnl-card{background:var(--bg2);border:1px solid var(--bordergold);}
+.tabs{display:flex;}
+.tab{flex:1;background:var(--bg3);border:none;border-right:1px solid var(--border);border-bottom:1px solid var(--gold);padding:8px 4px;font-size:10px;font-weight:700;color:var(--dim);cursor:pointer;letter-spacing:1px;}
+.tab:last-child{border-right:none;}
+.tab.active{background:var(--gold);color:#000;border-bottom:none;}
+.pnl-main{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 10px 6px;flex-wrap:wrap;}
+.pnl-label{font-size:11px;color:var(--dim);letter-spacing:2px;}
+.pnl-value{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;color:var(--green);}
+.pnl-stats{display:flex;justify-content:space-around;padding:6px 10px 12px;border-top:1px solid var(--border);font-size:11px;color:var(--dim);}
+.pnl-stats b{color:var(--gold);}
+/* CTRL LIST */
+.ctrl-list{display:flex;flex-direction:column;gap:4px;}
+.ctrl-item{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--border);padding:10px 12px;cursor:pointer;}
+.ctrl-item:active{border-color:var(--gold);}
+.ci-name{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;}
+.ci-icon{font-size:16px;}
+.go-btn{background:var(--gold);color:#000;border:none;padding:5px 12px;font-size:10px;font-weight:800;cursor:pointer;letter-spacing:1px;}
+/* ACTION BTNS */
+.pw-btn{width:100%;background:var(--bg3);border:1px solid var(--bordergold);color:var(--gold);padding:12px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:2px;}
+.logout-btn{width:100%;background:linear-gradient(135deg,#8b0000,var(--red));color:#fff;border:none;padding:13px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:2px;}
+/* INP */
+.inp{width:100%;background:var(--bg3);border:1px solid var(--bordergold);padding:9px 10px;color:var(--text);font-size:13px;outline:none;margin-bottom:8px;}
+.inp:focus{border-color:var(--gold);}
+.lf-btn{width:100%;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#000;border:none;padding:11px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1.5px;}
+/* BOTTOM NAV */
+.bottom-nav{flex-shrink:0;display:flex;background:var(--bg2);border-top:2px solid var(--gold);}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:7px 4px 5px;cursor:pointer;gap:2px;transition:all 0.2s;text-decoration:none;}
+.nav-item:active{background:#1a1600;}
+.nav-icon{font-size:17px;line-height:1;}
+.nav-label{font-size:8px;color:var(--dim);letter-spacing:0.5px;font-weight:700;}
+.nav-item.active .nav-label{color:var(--gold);}
+.nav-item.active .nav-icon{filter:drop-shadow(0 0 4px var(--gold));}
+/* EXIT FAB */
+.exit-fab{position:absolute;top:10px;right:10px;width:32px;height:32px;background:linear-gradient(135deg,#8b0000,var(--red));border:2px solid #ff8888;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;z-index:200;box-shadow:0 0 10px rgba(255,61,61,0.4);}
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal-bg.show{display:flex;}
+.modal-box{background:var(--bg2);border:2px solid var(--gold);width:calc(100% - 32px);max-width:380px;padding:14px;max-height:90vh;overflow-y:auto;}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--bordergold);margin-bottom:12px;}
+.modal-title{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--gold);letter-spacing:2px;}
+.modal-close{background:none;border:1px solid var(--border);color:var(--dim);font-size:18px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--bg3);border:1px solid var(--bordergold);padding:8px 16px;font-size:11px;color:var(--text);z-index:9999;white-space:nowrap;display:none;}
+.toast.show{display:block;}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="exit-fab" onclick="doLogout()" title="Logout">⏻</div>
+  <div class="ad-header"><div class="ad-title">⚙️ MASTER CONTROL</div></div>
+  <div class="ad-content">
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+      <div class="pr-left-wrap">
+        <div class="pr-avatar" id="avatarLetter">C<div class="active-dot"></div></div>
+        <div class="pr-info">
+          <div class="pr-id" id="adminId">ID: Charan007</div>
+          <div class="pr-status"><div class="active-ldot"></div>ACTIVE · <span id="adminBroker">SHOONYA</span></div>
+          <div class="pr-contact" id="adminPhone">📞 +91 98XXX XXXXX</div>
+          <div class="pr-contact" id="adminEmail">📧 charan@trishul.ai</div>
+        </div>
+      </div>
+      <div class="pr-row-btns">
+        <button class="theme-btn" onclick="toast('☀️ Theme Toggle — Coming Soon')">☀️ LIGHT MODE</button>
+        <button class="theme-btn" style="border-color:var(--green);color:var(--green)" onclick="toast('✅ Settings Saved!')">💾 SAVE</button>
+      </div>
+    </div>
+
+    <!-- PNL CARD -->
+    <div class="pnl-card">
+      <div class="tabs">
+        <button class="tab active" onclick="setAdminTab(this,'1D')">1 DAY</button>
+        <button class="tab" onclick="setAdminTab(this,'1W')">1 WEEK</button>
+        <button class="tab" onclick="setAdminTab(this,'1M')">1 MONTH</button>
+      </div>
+      <div class="pnl-main">
+        <span class="pnl-label">💰 NET P&L:</span>
+        <span class="pnl-value" id="pnlVal">+₹12,450.00</span>
+      </div>
+      <div class="pnl-stats">
+        <span>📊 Trades: <b id="trades">14</b></span>
+        <span>🎯 Accuracy: <b id="acc">78%</b></span>
+      </div>
+    </div>
+
+    <!-- QUICK NAV -->
+    <div class="ctrl-list">
+      <div class="ctrl-item" onclick="window.location.href='page2_home.html'">
+        <div class="ci-name"><span class="ci-icon">🏠</span> HOME PAGE</div>
+        <button class="go-btn">GO →</button>
+      </div>
+      <div class="ctrl-item" onclick="window.location.href='page3_signal.html'">
+        <div class="ci-name"><span class="ci-icon">📡</span> SIGNAL / SCANNER</div>
+        <button class="go-btn">GO →</button>
+      </div>
+      <div class="ctrl-item" onclick="window.location.href='page4_power.html'">
+        <div class="ci-name"><span class="ci-icon">⚡</span> POWER CONTROL</div>
+        <button class="go-btn">GO →</button>
+      </div>
+      <div class="ctrl-item" onclick="window.location.href='page5_chart.html'">
+        <div class="ci-name"><span class="ci-icon">📊</span> CHART PAGE</div>
+        <button class="go-btn">GO →</button>
+      </div>
+      <div class="ctrl-item" onclick="window.location.href='page6_watchlist.html'">
+        <div class="ci-name"><span class="ci-icon">⭐</span> WATCHLIST</div>
+        <button class="go-btn">GO →</button>
+      </div>
+    </div>
+
+    <button class="pw-btn" onclick="document.getElementById('pwModal').classList.add('show')">🔐 CHANGE PASSWORD (OTP)</button>
+    <button class="logout-btn" onclick="doLogout()">⏻ LOGOUT</button>
+  </div>
+  <div id="navContainer"></div>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="modal-bg" id="pwModal" onclick="closeModal('pwModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <div class="modal-title">🔐 CHANGE PASSWORD</div>
+      <button class="modal-close" onclick="closeModal('pwModal')">✕</button>
+    </div>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:12px;text-align:center;line-height:1.8">
+      📱 OTP भेजा गया <b style="color:var(--gold)">+91 98XXX XXXXX</b> और<br>
+      <b style="color:var(--gold)">charan@trishul.ai</b> पर
+    </div>
+    <div style="font-size:10px;color:var(--dim);letter-spacing:1.5px;margin-bottom:6px">ENTER OTP</div>
+    <input class="inp" type="text" maxlength="6" placeholder="XXXXXX"/>
+    <div style="font-size:10px;color:var(--dim);letter-spacing:1.5px;margin-bottom:6px">NEW PASSWORD</div>
+    <input class="inp" type="password" placeholder="New password"/>
+    <button class="lf-btn" onclick="closeModal('pwModal');toast('✅ Password updated!')">🔐 UPDATE</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+const PNL={'1D':{val:'+₹12,450.00',trades:14,acc:'78%'},'1W':{val:'+₹54,230.00',trades:68,acc:'72%'},'1M':{val:'+₹2,15,890',trades:284,acc:'74%'}};
+
+// Load user from session
+const user=sessionStorage.getItem('tp_user')||'Charan';
+const broker=sessionStorage.getItem('tp_broker')||'Shoonya';
+const firstName=user.split(' ')[0];
+document.getElementById('avatarLetter').innerHTML=firstName[0].toUpperCase()+'<div class="active-dot"></div>';
+document.getElementById('adminId').textContent='ID: '+firstName+'007';
+document.getElementById('adminBroker').textContent=broker.replace(/\s*\(.*\)/,'').toUpperCase();
+
+function setAdminTab(el,range){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const d=PNL[range];
+  document.getElementById('pnlVal').textContent=d.val;
+  document.getElementById('trades').textContent=d.trades;
+  document.getElementById('acc').textContent=d.acc;
+}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+function doLogout(){if(confirm('Logout करना है?')){sessionStorage.clear();window.location.href='page1_login.html';}}
+
+document.getElementById('navContainer').innerHTML=`<div class="bottom-nav"><a class="nav-item" href="page2_home.html"><div class="nav-icon">🏠</div><div class="nav-label">HOME</div></a><a class="nav-item" href="page3_signal.html"><div class="nav-icon">📡</div><div class="nav-label">SIGNAL</div></a><a class="nav-item" href="page4_power.html"><div class="nav-icon">⚡</div><div class="nav-label">POWER</div></a><a class="nav-item" href="page5_chart.html"><div class="nav-icon">📊</div><div class="nav-label">CHART</div></a><a class="nav-item" href="page6_watchlist.html"><div class="nav-icon">⭐</div><div class="nav-label">WATCH</div></a><a class="nav-item active" href="page7_admin.html"><div class="nav-icon">⚙️</div><div class="nav-label">ADMIN</div></a></div>`;
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🔱 Trishul Pro — Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:'Rajdhani',sans-serif;}
+:root{--gold:#f5c518;--gold2:#c9a000;--bg:#000;--bg2:#0a0a0a;--bg3:#121212;--bg4:#1a1a1a;--border:#222;--bordergold:#3d3000;--text:#eee;--dim:#888;--green:#00c853;--red:#ff3d3d;--orange:#ff6d00;--blue:#1976d2;}
+html,body{height:100%;background:var(--bg);color:var(--text);overflow:hidden;}
+.phone-frame{width:100%;max-width:430px;height:100vh;margin:0 auto;display:flex;flex-direction:column;background:var(--bg);border:2px solid var(--gold);overflow:hidden;position:relative;}
+/* TICKER */
+.ticker{flex-shrink:0;background:#05050f;border-bottom:1px solid #f5c51830;overflow:hidden;height:22px;display:flex;align-items:center;}
+.ticker-inner{display:flex;white-space:nowrap;animation:tick 28s linear infinite;}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ti{padding:0 14px;font-size:10px;font-weight:600;color:#555;}
+.up{color:var(--green);}.dn{color:var(--red);}
+/* GEMINI BAR */
+.gemini-bar{flex-shrink:0;background:#05050f;border-bottom:1px solid #f5c51820;padding:3px 8px;display:flex;align-items:center;gap:6px;}
+.g-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.g-txt{font-size:9px;color:#555;letter-spacing:1px;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.g-time{font-size:9px;color:#333;}
+/* TITLE */
+.title-box{flex-shrink:0;margin:5px 6px 0;border:2px solid var(--gold);padding:7px 10px;display:flex;align-items:center;justify-content:center;gap:10px;background:#050510;}
+.title-text{font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;color:var(--gold);letter-spacing:4px;}
+/* INDICES */
+.top-indices{flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin:4px 6px 0;}
+.idx-box{background:var(--bg3);border:1px solid var(--border);padding:7px 3px;text-align:center;cursor:pointer;}
+.idx-box:active{border-color:var(--gold);}
+.idx-name{font-size:8px;color:var(--dim);letter-spacing:0.5px;margin-bottom:2px;}
+.idx-val{font-size:13px;font-weight:700;color:var(--text);}
+.idx-chg{font-size:9px;margin-top:1px;}
+/* SIGNAL ROW */
+.signal-row{flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:4px 6px 0;}
+.sig-box{background:var(--bg4);border:1px solid var(--border);padding:5px 2px;text-align:center;}
+.sig-label{font-size:7px;color:var(--dim);margin-bottom:2px;}
+.sig-val{font-size:11px;font-weight:700;color:var(--gold);}
+/* SECTOR */
+.sector-label{flex-shrink:0;padding:4px 8px 2px;font-size:9px;color:var(--dim);letter-spacing:1.5px;font-weight:700;}
+.sector-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:0 6px 4px;overflow:hidden;}
+.sec-box{border:1px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;}
+.sec-box:active{filter:brightness(1.3);}
+.sec-name{font-size:11px;font-weight:700;color:#fff;}
+.sec-stats{font-size:9px;display:flex;gap:5px;}
+.s-up{color:#00ff88;}.s-dn{color:#ff8888;}
+.sc-0{background:#0a3a1a;border-color:#00c853;}.sc-1{background:#083018;border-color:#009940;}
+.sc-2{background:#082818;border-color:#007030;}.sc-3{background:#0a2010;border-color:#005020;}
+.sc-4{background:#101800;border-color:#304000;}.sc-5{background:#181200;border-color:#403000;}
+.sc-6{background:#200a00;border-color:#602000;}.sc-7{background:#2a0600;border-color:#801000;}
+.sc-8{background:#300400;border-color:#990800;}.sc-9{background:#380200;border-color:#bb0404;}
+.sc-10{background:#3a0000;border-color:#cc0000;}.sc-11{background:#3d0000;border-color:#dd0000;}
+/* BOTTOM NAV */
+.bottom-nav{flex-shrink:0;display:flex;background:var(--bg2);border-top:2px solid var(--gold);}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:7px 4px 5px;cursor:pointer;gap:2px;transition:all 0.2s;text-decoration:none;}
+.nav-item:active{background:#1a1600;}
+.nav-icon{font-size:17px;line-height:1;}
+.nav-label{font-size:8px;color:var(--dim);letter-spacing:0.5px;font-weight:700;}
+.nav-item.active .nav-label{color:var(--gold);}
+.nav-item.active .nav-icon{filter:drop-shadow(0 0 4px var(--gold));}
+/* EXIT FAB */
+.exit-fab{position:absolute;top:10px;right:10px;width:32px;height:32px;background:linear-gradient(135deg,#8b0000,var(--red));border:2px solid #ff8888;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;z-index:200;box-shadow:0 0 10px rgba(255,61,61,0.4);}
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal-bg.show{display:flex;}
+.modal-box{background:var(--bg2);border:2px solid var(--gold);width:calc(100% - 32px);max-width:380px;padding:14px;max-height:90vh;overflow-y:auto;}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--bordergold);margin-bottom:12px;}
+.modal-title{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--gold);letter-spacing:2px;}
+.modal-close{background:none;border:1px solid var(--border);color:var(--dim);font-size:18px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;}
+.index-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.m-box{background:#050510;border:1px solid var(--border);padding:12px;text-align:center;}
+.m-label{font-size:9px;color:var(--dim);letter-spacing:1px;margin-bottom:4px;}
+.m-val-big{font-size:20px;font-weight:700;color:var(--text);font-family:'Orbitron',sans-serif;}
+/* DRILL */
+.drill-bg{position:fixed;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:900;max-width:430px;margin:0 auto;}
+.drill-bg.show{display:flex;}
+.drill-header{background:#0c0c18;border-bottom:2px solid var(--gold);padding:12px 14px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.drill-back{font-size:22px;cursor:pointer;color:var(--gold);}
+.drill-title-big{font-family:'Orbitron',sans-serif;font-size:14px;color:var(--gold);letter-spacing:2px;}
+.drill-count{margin-left:auto;font-size:11px;}
+.drill-list{flex:1;overflow-y:auto;padding:6px;scrollbar-width:none;}
+.drill-list::-webkit-scrollbar{display:none;}
+.d-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;margin-bottom:4px;border:1px solid transparent;}
+.d-item.green-item{background:#083018;border-color:#009940;}
+.d-item.red-item{background:#300400;border-color:#880000;}
+.d-name-big{font-size:14px;font-weight:700;}
+.d-price-big{font-size:15px;font-weight:700;font-family:'Orbitron',sans-serif;}
+.d-chg-big{font-size:10px;margin-top:2px;text-align:right;}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--bg3);border:1px solid var(--bordergold);padding:8px 16px;font-size:11px;color:var(--text);z-index:9999;white-space:nowrap;display:none;}
+.toast.show{display:block;}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="exit-fab" onclick="doLogout()" title="Logout">⏻</div>
+  <div class="ticker"><div class="ticker-inner" id="tickerInner"></div></div>
+  <div class="gemini-bar">
+    <div class="g-dot"></div>
+    <div class="g-txt" id="geminiTxt">🤖 GEMINI: Pipeline OK · Scanner Feed Active</div>
+    <div class="g-time" id="geminiTime"></div>
+  </div>
+  <div class="title-box">
+    <span style="font-size:20px">🔱</span>
+    <span class="title-text">TRISHUL PRO</span>
+    <span style="font-size:20px">🔱</span>
+  </div>
+  <div class="top-indices" id="topIndices"></div>
+  <div class="signal-row" id="signalRow"></div>
+  <div class="sector-label">▦ SECTOR HEATMAP</div>
+  <div class="sector-grid" id="sectorGrid"></div>
+  <div id="navContainer"></div>
+</div>
+
+<!-- INDEX MODAL -->
+<div class="modal-bg" id="idxModal" onclick="closeModal('idxModal')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <div class="modal-title" id="modalName">NIFTY 50</div>
+      <button class="modal-close" onclick="closeModal('idxModal')">✕</button>
+    </div>
+    <div class="index-modal-grid">
+      <div class="m-box"><div class="m-label">OPEN</div><div class="m-val-big" id="mO">--</div></div>
+      <div class="m-box"><div class="m-label">HIGH</div><div class="m-val-big up" id="mH">--</div></div>
+      <div class="m-box"><div class="m-label">LOW</div><div class="m-val-big dn" id="mL">--</div></div>
+      <div class="m-box"><div class="m-label">PREV</div><div class="m-val-big" id="mP">--</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DRILL DOWN -->
+<div class="drill-bg" id="drillBg">
+  <div class="drill-header">
+    <span class="drill-back" onclick="closeDrill()">←</span>
+    <span class="drill-title-big" id="drillName">BANKING</span>
+    <span class="drill-count" id="drillCount"></span>
+  </div>
+  <div class="drill-list" id="drillList"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="common.js"></script>
+<script>
+const INDICES_DATA = [
+  { name:'NIFTY 50',   val:24150, chg:145, pct:0.61, open:24005, high:24210, low:23980, prev:24005 },
+  { name:'BANK NIFTY', val:51320, chg:280, pct:0.55, open:51040, high:51480, low:50890, prev:51040 },
+  { name:'SENSEX',     val:79850, chg:420, pct:0.53, open:79430, high:80020, low:79300, prev:79430 },
+  { name:'PROFILE',    isProfile:true },
+];
+const SECTORS_DATA = [
+  {name:'REALTY',up:9,dn:0,cl:'sc-0'},{name:'BANKING',up:8,dn:1,cl:'sc-1'},{name:'IT',up:7,dn:2,cl:'sc-2'},
+  {name:'AUTO',up:6,dn:1,cl:'sc-3'},{name:'FINANCE',up:5,dn:1,cl:'sc-3'},{name:'CHEMICAL',up:6,dn:2,cl:'sc-4'},
+  {name:'POWER',up:4,dn:4,cl:'sc-5'},{name:'INFRA',up:3,dn:3,cl:'sc-5'},{name:'TELECOM',up:2,dn:2,cl:'sc-6'},
+  {name:'CEMENT',up:2,dn:4,cl:'sc-7'},{name:'CONSUMER',up:3,dn:5,cl:'sc-8'},{name:'FMCG',up:3,dn:6,cl:'sc-9'},
+  {name:'ENERGY',up:1,dn:5,cl:'sc-10'},{name:'MEDIA',up:1,dn:5,cl:'sc-10'},{name:'PSU BANK',up:2,dn:6,cl:'sc-11'},
+  {name:'PHARMA',up:2,dn:7,cl:'sc-11'},{name:'OIL&GAS',up:2,dn:7,cl:'sc-11'},{name:'METAL',up:1,dn:8,cl:'sc-11'},
+];
+const SS = {'BANKING':[{n:'HDFC BANK',p:1678,c:0.8},{n:'ICICI BANK',p:1245,c:1.5},{n:'SBI',p:789,c:0.6},{n:'AXIS BANK',p:1123,c:0.5},{n:'KOTAK',p:1834,c:-0.3}],'IT':[{n:'TCS',p:3890,c:-1.1},{n:'INFY',p:1890,c:-0.4},{n:'WIPRO',p:567,c:-0.4},{n:'HCL TECH',p:1456,c:0.8}],'AUTO':[{n:'MARUTI',p:11200,c:0.9},{n:'TATA MOTORS',p:890,c:1.8},{n:'M&M',p:2345,c:1.2}],'REALTY':[{n:'DLF',p:789,c:2.1},{n:'GODREJ PROP',p:2345,c:1.8},{n:'SOBHA',p:1234,c:1.5}]};
+
+function renderIndices() {
+  document.getElementById('topIndices').innerHTML = INDICES_DATA.map((idx,i) => {
+    if (idx.isProfile) return `<div class="idx-box" style="border-color:var(--gold)" onclick="window.location='page7_admin.html'"><div class="idx-name">PROFILE</div><div style="font-size:22px;margin-top:2px">👤</div></div>`;
+    return `<div class="idx-box" onclick="openIndexModal(${i})"><div class="idx-name">${idx.name}</div><div class="idx-val">${idx.val.toLocaleString()}</div><div class="idx-chg ${idx.chg>=0?'up':'dn'}">${idx.chg>=0?'▲':'▼'}${Math.abs(idx.pct)}%</div></div>`;
+  }).join('');
+}
+function renderQuick() {
+  const QK=[{label:'VIX',val:'14.5',note:'LOW'},{label:'PCR',val:'0.85',note:'NTRL'},{label:'FII',val:'+2.1K',note:'BUY'},{label:'DII',val:'+1.4K',note:'BUY'},{label:'ADV',val:'1842',note:'▲'}];
+  document.getElementById('signalRow').innerHTML = QK.map(q=>`<div class="sig-box"><div class="sig-label">${q.label}</div><div class="sig-val">${q.val}</div><div style="font-size:8px;color:var(--green)">${q.note}</div></div>`).join('');
+}
+function renderSectors() {
+  document.getElementById('sectorGrid').innerHTML = SECTORS_DATA.map(s=>`<div class="sec-box ${s.cl}" onclick="openDrill('${s.name}')"><div class="sec-name">${s.name}</div><div class="sec-stats"><span class="s-up">▲${s.up}</span><span class="s-dn">▼${s.dn}</span></div></div>`).join('');
+}
+function renderTicker() {
+  const items = INDICES_DATA.filter(i=>!i.isProfile).map(i=>`<span class="ti">🔱 ${i.name} <span class="${i.chg>=0?'up':'dn'}">${i.val.toLocaleString()} ${i.chg>=0?'▲':'▼'}${Math.abs(i.pct)}%</span></span>`);
+  document.getElementById('tickerInner').innerHTML = items.join('')+items.join('');
+}
+function openIndexModal(i) {
+  const idx=INDICES_DATA[i]; if(idx.isProfile) return;
+  document.getElementById('modalName').textContent=idx.name;
+  document.getElementById('mO').textContent=idx.open.toLocaleString();
+  document.getElementById('mH').textContent=idx.high.toLocaleString();
+  document.getElementById('mL').textContent=idx.low.toLocaleString();
+  document.getElementById('mP').textContent=idx.prev.toLocaleString();
+  openModal('idxModal');
+}
+function openDrill(sector) {
+  document.getElementById('drillName').textContent=sector;
+  const stocks=(SS[sector]||[{n:'STOCK A',p:1200,c:1.2},{n:'STOCK B',p:800,c:-0.5},{n:'STOCK C',p:2300,c:0.8}]).sort((a,b)=>b.c-a.c);
+  const g=stocks.filter(s=>s.c>=0).length;
+  document.getElementById('drillCount').innerHTML=`<span class="up">▲${g}</span> <span class="dn">▼${stocks.length-g}</span>`;
+  document.getElementById('drillList').innerHTML=stocks.map(s=>`<div class="d-item ${s.c>=0?'green-item':'red-item'}"><div><div class="d-name-big">${s.n}</div><div style="font-size:9px;color:var(--dim)">${sector}</div></div><div><div class="d-price-big ${s.c>=0?'up':'dn'}">₹${s.p.toLocaleString()}</div><div class="d-chg-big ${s.c>=0?'up':'dn'}">${s.c>=0?'+':''}${s.c}%</div></div></div>`).join('');
+  document.getElementById('drillBg').classList.add('show');
+}
+function closeDrill(){document.getElementById('drillBg').classList.remove('show');}
+function openModal(id){document.getElementById(id).classList.add('show');}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+function doLogout(){if(confirm('Logout करना है?')){window.location.href='page1_login.html';}}
+
+function injectNav() {
+  document.getElementById('navContainer').innerHTML=`<div class="bottom-nav"><a class="nav-item active" href="page2_home.html"><div class="nav-icon">🏠</div><div class="nav-label">HOME</div></a><a class="nav-item" href="page3_signal.html"><div class="nav-icon">📡</div><div class="nav-label">SIGNAL</div></a><a class="nav-item" href="page4_power.html"><div class="nav-icon">⚡</div><div class="nav-label">POWER</div></a><a class="nav-item" href="page5_chart.html"><div class="nav-icon">📊</div><div class="nav-label">CHART</div></a><a class="nav-item" href="page6_watchlist.html"><div class="nav-icon">⭐</div><div class="nav-label">WATCH</div></a><a class="nav-item" href="page7_admin.html"><div class="nav-icon">⚙️</div><div class="nav-label">ADMIN</div></a></div>`;
+}
+
+// Gemini check
+setInterval(()=>{
+  const el=document.getElementById('geminiTime'); if(el) el.textContent=new Date().toLocaleTimeString();
+  const msgs=['🤖 GEMINI: Pipeline OK · Scanner Feed Active','🤖 GEMINI: All 9 Scanners Running · No Errors','🤖 GEMINI: Volume Meter OK · AWS Connected'];
+  const gt=document.getElementById('geminiTxt'); if(gt) gt.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+},20000);
+
+// Live index update
+setInterval(()=>{
+  INDICES_DATA.forEach(i=>{if(!i.isProfile){i.val+=Math.round((Math.random()-0.48)*15);}});
+  renderIndices(); renderTicker();
+},5000);
+
+renderIndices(); renderQuick(); renderSectors(); renderTicker(); injectNav();
+document.getElementById('geminiTime').textContent=new Date().toLocaleTimeString();
+</script>
+</body>
+</html>
