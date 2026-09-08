@@ -4,21 +4,27 @@ import axios from 'axios'
 function Home({ user }) {
   const [indices, setIndices] = useState([])
   const [sectors, setSectors] = useState([])
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setError(null)
         const indRes = await axios.get('/api/market/indices')
-        setIndices(indRes.data.data)
+        setIndices(indRes.data.data || [])
         
         const secRes = await axios.get('/api/market/sectors')
-        setSectors(secRes.data.data)
+        setSectors(secRes.data.data || [])
       } catch (err) {
         console.error('Failed to fetch data:', err)
+        setError('Failed to load market data')
       }
     }
+
     fetchData()
     const interval = setInterval(fetchData, 5000)
+    
+    // Cleanup on unmount
     return () => clearInterval(interval)
   }, [])
 
@@ -29,30 +35,40 @@ function Home({ user }) {
       </div>
       
       <div style={styles.content}>
+        {error && <div style={styles.error}>{error}</div>}
+        
         <h3 style={styles.sectionTitle}>MARKET INDICES</h3>
         <div style={styles.grid}>
-          {indices.map((idx, i) => (
-            <div key={i} style={styles.card}>
-              <div style={styles.cardLabel}>{idx.name}</div>
-              <div style={styles.cardValue}>{idx.value.toLocaleString()}</div>
-              <div style={{ ...styles.cardChange, color: idx.change >= 0 ? 'var(--green)' : 'var(--red)' }}>
-                {idx.change >= 0 ? '▲' : '▼'} {Math.abs(idx.percent).toFixed(2)}%
+          {indices && indices.length > 0 ? (
+            indices.map((idx) => (
+              <div key={idx.name || idx.value} style={styles.card}>
+                <div style={styles.cardLabel}>{idx.name}</div>
+                <div style={styles.cardValue}>{idx.value?.toLocaleString() || '--'}</div>
+                <div style={{ ...styles.cardChange, color: (idx.change || 0) >= 0 ? 'var(--green)' : 'var(--red)' }}>
+                  {(idx.change || 0) >= 0 ? '▲' : '▼'} {Math.abs(idx.percent || 0).toFixed(2)}%
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div style={styles.emptyState}>No data available</div>
+          )}
         </div>
         
         <h3 style={styles.sectionTitle}>SECTOR HEATMAP</h3>
         <div style={styles.sectorGrid}>
-          {sectors.map((sec, i) => (
-            <div key={i} style={{ ...styles.sectorBox, background: sec.up > sec.down ? '#083018' : '#300400' }}>
-              <div>{sec.name}</div>
-              <div style={styles.sectorStats}>
-                <span style={{ color: 'var(--green)' }}>▲{sec.up}</span>
-                <span style={{ color: 'var(--red)' }}>▼{sec.down}</span>
+          {sectors && sectors.length > 0 ? (
+            sectors.map((sec) => (
+              <div key={sec.name || sec.up} style={{ ...styles.sectorBox, background: (sec.up || 0) > (sec.down || 0) ? '#083018' : '#300400' }}>
+                <div>{sec.name}</div>
+                <div style={styles.sectorStats}>
+                  <span style={{ color: 'var(--green)' }}>▲{sec.up || 0}</span>
+                  <span style={{ color: 'var(--red)' }}>▼{sec.down || 0}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div style={styles.emptyState}>No sectors available</div>
+          )}
         </div>
       </div>
       
@@ -84,6 +100,15 @@ const styles = {
     flex: 1,
     overflowY: 'auto',
     padding: '12px'
+  },
+  error: {
+    background: 'rgba(255, 61, 61, 0.1)',
+    border: '1px solid var(--red)',
+    color: 'var(--red)',
+    padding: '8px',
+    borderRadius: '4px',
+    fontSize: '11px',
+    marginBottom: '12px'
   },
   sectionTitle: {
     fontSize: '12px',
@@ -138,6 +163,12 @@ const styles = {
     gap: '4px',
     justifyContent: 'center',
     marginTop: '4px'
+  },
+  emptyState: {
+    textAlign: 'center',
+    color: 'var(--dim)',
+    fontSize: '12px',
+    padding: '20px'
   },
   nav: {
     display: 'flex',

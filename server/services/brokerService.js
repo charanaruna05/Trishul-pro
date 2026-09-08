@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { totp } from 'otplib'
+import { validateEnv } from '../config/env-validator.js'
 
 const ANGEL_BASE_URL = 'https://apiconnect.angelone.in/rest/auth'
 const SHOONYA_BASE_URL = 'https://api.shoonya.com'
@@ -10,11 +11,15 @@ export async function connectBroker(broker, credentials) {
   } else if (broker === 'Shoonya') {
     return connectShoonya(credentials)
   }
-  throw new Error('Unsupported broker')
+  throw new Error('Unsupported broker: ' + broker)
 }
 
 async function connectAngelOne(credentials) {
   try {
+    // ✅ FIXED: Added environment variable validation
+    const requiredEnvs = ['ANGEL_API_KEY', 'ANGEL_TOTP_SECRET']
+    validateEnv(requiredEnvs)
+
     const totpCode = totp.generate(process.env.ANGEL_TOTP_SECRET)
     
     const response = await axios.post(
@@ -40,17 +45,22 @@ async function connectAngelOne(credentials) {
       return {
         success: true,
         token: response.data.data.jwtToken,
-        message: 'Angel One connected'
+        message: 'Angel One connected successfully'
       }
     }
-    return { success: false, message: response.data.message }
+    return { success: false, message: response.data.message || 'Connection failed' }
   } catch (err) {
-    return { success: false, message: err.message }
+    console.error('Angel One connection error:', err.message)
+    return { success: false, message: 'Angel One API error: ' + err.message }
   }
 }
 
 async function connectShoonya(credentials) {
   try {
+    // ✅ FIXED: Added environment variable validation
+    const requiredEnvs = ['SHOONYA_UID', 'SHOONYA_PASSWORD']
+    validateEnv(requiredEnvs)
+
     const response = await axios.post(
       `${SHOONYA_BASE_URL}/api/login`,
       {
@@ -64,24 +74,51 @@ async function connectShoonya(credentials) {
       return {
         success: true,
         token: response.data.sessionid,
-        message: 'Shoonya connected'
+        message: 'Shoonya connected successfully'
       }
     }
-    return { success: false, message: response.data.emsg }
+    return { success: false, message: response.data.emsg || 'Connection failed' }
   } catch (err) {
-    return { success: false, message: err.message }
+    console.error('Shoonya connection error:', err.message)
+    return { success: false, message: 'Shoonya API error: ' + err.message }
   }
 }
 
 export async function getHoldings(token) {
-  // Implement actual broker API call
-  return []
+  try {
+    if (!token) {
+      throw new Error('Broker token required')
+    }
+    // TODO: Implement actual broker API call
+    return []
+  } catch (err) {
+    console.error('Get holdings error:', err)
+    return []
+  }
 }
 
 export async function getOrders(token) {
-  return []
+  try {
+    if (!token) {
+      throw new Error('Broker token required')
+    }
+    // TODO: Implement actual broker API call
+    return []
+  } catch (err) {
+    console.error('Get orders error:', err)
+    return []
+  }
 }
 
 export async function getPositions(token) {
-  return []
+  try {
+    if (!token) {
+      throw new Error('Broker token required')
+    }
+    // TODO: Implement actual broker API call
+    return []
+  } catch (err) {
+    console.error('Get positions error:', err)
+    return []
+  }
 }
