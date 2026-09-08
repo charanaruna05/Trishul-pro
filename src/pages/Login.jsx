@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
+const axiosInstance = axios.create({
+  timeout: 10000
+})
+
 function Login({ setAuth, setUser }) {
   const [formData, setFormData] = useState({
     fullName: 'Charan',
@@ -10,6 +14,7 @@ function Login({ setAuth, setUser }) {
     broker: 'Shoonya'
   })
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -18,20 +23,29 @@ function Login({ setAuth, setUser }) {
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoading(true)
+    setError(null)
+    
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await axiosInstance.post('/api/auth/login', {
         email: formData.email,
         password: formData.password,
         broker: formData.broker
       })
+      
       if (response.data.success) {
         localStorage.setItem('tp_token', response.data.token)
         localStorage.setItem('tp_user', JSON.stringify({ name: formData.fullName, broker: formData.broker }))
         setAuth(true)
         setUser({ name: formData.fullName, broker: formData.broker })
+      } else {
+        setError('Login failed: ' + (response.data.error || 'Unknown error'))
       }
     } catch (err) {
-      alert('Login failed: ' + err.message)
+      const errorMsg = err.code === 'ECONNABORTED' 
+        ? 'Connection timeout - server not responding'
+        : err.response?.data?.error || err.message || 'Login failed'
+      setError(errorMsg)
+      console.error('Login error:', err)
     } finally {
       setLoading(false)
     }
@@ -44,6 +58,8 @@ function Login({ setAuth, setUser }) {
         <div style={styles.subtitle}>TRISHUL PRO</div>
       </div>
       <form onSubmit={handleLogin} style={styles.form}>
+        {error && <div style={styles.error}>{error}</div>}
+        
         <input
           type="text"
           name="fullName"
@@ -51,6 +67,7 @@ function Login({ setAuth, setUser }) {
           value={formData.fullName}
           onChange={handleChange}
           style={styles.input}
+          disabled={loading}
         />
         <input
           type="email"
@@ -59,6 +76,7 @@ function Login({ setAuth, setUser }) {
           value={formData.email}
           onChange={handleChange}
           style={styles.input}
+          disabled={loading}
         />
         <input
           type="password"
@@ -67,12 +85,14 @@ function Login({ setAuth, setUser }) {
           value={formData.password}
           onChange={handleChange}
           style={styles.input}
+          disabled={loading}
         />
         <select
           name="broker"
           value={formData.broker}
           onChange={handleChange}
           style={styles.input}
+          disabled={loading}
         >
           <option>Shoonya</option>
           <option>Angel One</option>
@@ -112,6 +132,15 @@ const styles = {
     gap: '12px',
     padding: '16px',
     overflowY: 'auto'
+  },
+  error: {
+    background: 'rgba(255, 61, 61, 0.1)',
+    border: '1px solid var(--red)',
+    color: 'var(--red)',
+    padding: '8px',
+    borderRadius: '4px',
+    fontSize: '11px',
+    marginBottom: '8px'
   },
   input: {
     width: '100%',

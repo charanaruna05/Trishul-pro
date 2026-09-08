@@ -1,47 +1,86 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const axiosInstance = axios.create({
+  timeout: 10000
+})
+
 function Home({ user }) {
   const [indices, setIndices] = useState([])
   const [sectors, setSectors] = useState([])
   const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [lastUpdate, setLastUpdate] = useState(null)
 
   useEffect(() => {
+    let isMounted = true
+    let pollInterval = null
+    let retryCount = 0
+    const maxRetries = 3
+
     const fetchData = async () => {
+      if (loading || retryCount >= maxRetries) return
+
+      setLoading(true)
       try {
         setError(null)
-        const indRes = await axios.get('/api/market/indices')
-        setIndices(indRes.data.data || [])
         
-        const secRes = await axios.get('/api/market/sectors')
-        setSectors(secRes.data.data || [])
+        const [indRes, secRes] = await Promise.all([
+          axiosInstance.get('/api/market/indices'),
+          axiosInstance.get('/api/market/sectors')
+        ])
+
+        if (!isMounted) return
+
+        setIndices(indRes.data?.data || [])
+        setSectors(secRes.data?.data || [])
+        setLastUpdate(new Date())
+        retryCount = 0
       } catch (err) {
-        console.error('Failed to fetch data:', err)
-        setError('Failed to load market data')
+        if (!isMounted) return
+
+        retryCount++
+        const errorMsg = err.code === 'ECONNABORTED' 
+          ? 'Request timeout - server not responding'
+          : err.message || 'Failed to load market data'
+        
+        setError(errorMsg)
+        console.error('Market data fetch error:', err)
+      } finally {
+        if (isMounted) setLoading(false)
       }
     }
 
     fetchData()
-    const interval = setInterval(fetchData, 5000)
-    
-    // Cleanup on unmount
-    return () => clearInterval(interval)
+
+    pollInterval = setInterval(() => {
+      if (!loading && retryCount < maxRetries) {
+        fetchData()
+      }
+    }, 10000)
+
+    return () => {
+      isMounted = false
+      if (pollInterval) clearInterval(pollInterval)
+    }
   }, [])
 
   return (
     <div className="phone-frame">
       <div style={styles.header}>
         <span style={styles.title}>🔱 TRISHUL PRO</span>
+        {lastUpdate && <div style={styles.lastUpdate}>Last: {lastUpdate.toLocaleTimeString()}</div>}
       </div>
       
       <div style={styles.content}>
         {error && <div style={styles.error}>{error}</div>}
+        {loading && <div style={styles.loading}>Loading...</div>}
         
         <h3 style={styles.sectionTitle}>MARKET INDICES</h3>
         <div style={styles.grid}>
           {indices && indices.length > 0 ? (
             indices.map((idx) => (
-              <div key={idx.name || idx.value} style={styles.card}>
+              <div key={`idx-${idx.name}`} style={styles.card}>
                 <div style={styles.cardLabel}>{idx.name}</div>
                 <div style={styles.cardValue}>{idx.value?.toLocaleString() || '--'}</div>
                 <div style={{ ...styles.cardChange, color: (idx.change || 0) >= 0 ? 'var(--green)' : 'var(--red)' }}>
@@ -58,7 +97,7 @@ function Home({ user }) {
         <div style={styles.sectorGrid}>
           {sectors && sectors.length > 0 ? (
             sectors.map((sec) => (
-              <div key={sec.name || sec.up} style={{ ...styles.sectorBox, background: (sec.up || 0) > (sec.down || 0) ? '#083018' : '#300400' }}>
+              <div key={`sec-${sec.name}`} style={{ ...styles.sectorBox, background: (sec.up || 0) > (sec.down || 0) ? '#083018' : '#300400' }}>
                 <div>{sec.name}</div>
                 <div style={styles.sectorStats}>
                   <span style={{ color: 'var(--green)' }}>▲{sec.up || 0}</span>
@@ -96,6 +135,11 @@ const styles = {
     color: 'var(--gold)',
     letterSpacing: '2px'
   },
+  lastUpdate: {
+    fontSize: '8px',
+    color: 'var(--dim)',
+    marginTop: '4px'
+  },
   content: {
     flex: 1,
     overflowY: 'auto',
@@ -109,6 +153,12 @@ const styles = {
     borderRadius: '4px',
     fontSize: '11px',
     marginBottom: '12px'
+  },
+  loading: {
+    textAlign: 'center',
+    color: 'var(--gold)',
+    fontSize: '12px',
+    padding: '12px'
   },
   sectionTitle: {
     fontSize: '12px',

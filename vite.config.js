@@ -5,11 +5,16 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
+    strictPort: false,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:3000/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/ws': {
+        target: 'ws://localhost:3000',
+        ws: true
       }
     }
   },
@@ -19,7 +24,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor': ['react', 'react-dom', 'recharts']
+          'vendor': ['react', 'react-dom', 'recharts', 'axios'],
+          'router': ['react-router-dom']
         }
       }
     }
