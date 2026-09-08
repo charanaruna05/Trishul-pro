@@ -1,0 +1,159 @@
+/* ═══════════════════════════════════════════
+   TRISHUL PRO — GLOBAL STYLES
+═══════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@700;900&family=Inter:wght@300;400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+:root {
+  --gold: #f5c518;
+  --gold2: #c9a000;
+  --bg: #000;
+  --bg2: #0a0a0a;
+  --bg3: #121212;
+  --bg4: #1a1a1a;
+  --border: #222;
+  --bordergold: #3d3000;
+  --text: #eee;
+  --dim: #888;
+  --green: #00c853;
+  --red: #ff3d3d;
+  --orange: #ff6d00;
+  --blue: #1976d2;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+}
+
+/* Phone Frame */
+.phone-frame {
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  border-left: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+  border-top: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+}
+
+/* Navigation */
+.bottom-nav {
+  flex-shrink: 0;
+  display: flex;
+  background: var(--bg2);
+  border-top: 2px solid var(--gold);
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 7px 4px 5px;
+  cursor: pointer;
+  gap: 2px;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-item:active {
+  background: #1a1600;
+}
+
+.nav-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.nav-label {
+  font-size: 8px;
+  color: var(--dim);
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.nav-item.active .nav-label {
+  color: var(--gold);
+}
+
+.nav-item.active .nav-icon {
+  filter: drop-shadow(0 0 4px var(--gold));
+}
+
+/* Utilities */
+.up {
+  color: var(--green);
+}
+
+.dn {
+  color: var(--red);
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg3);
+  border: 1px solid var(--bordergold);
+  padding: 8px 16px;
+  font-size: 11px;
+  color: var(--text);
+  z-index: 999;
+  display: none;
+  white-space: nowrap;
+  border-radius: 4px;
+}
+
+.toast.show {
+  display: block;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}

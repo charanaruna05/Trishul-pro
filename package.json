@@ -1,19 +1,41 @@
 {
-  "name": "trinetr-pro",
-  "private": true,
-  "version": "1.0.0",
+  "name": "trishul-pro",
+  "version": "2.0.0",
+  "description": "Advanced Indian Stock Market Trading Platform with AI Integration",
   "type": "module",
+  "main": "server/index.js",
   "scripts": {
-    "dev": "vite",
+    "dev": "node --watch server/index.js & vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server/index.js",
+    "server": "node --watch server/index.js",
+    "lint": "eslint . --ext .js,.jsx",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\""
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "express": "^4.18.2",
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "jsonwebtoken": "^9.1.2",
+    "bcryptjs": "^2.4.3",
+    "otplib": "^12.0.1",
+    "redis": "^4.6.11",
+    "pg": "^8.11.3",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4",
+    "express-rate-limit": "^7.1.5",
+    "socket.io": "^4.7.2",
+    "recharts": "^2.10.3",
+    "dayjs": "^1.11.10"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0"
   }
 }

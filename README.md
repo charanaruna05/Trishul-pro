@@ -1,31 +1,110 @@
-# 🔱 TRISHUL PRO
-**Indian Stock Market Intelligence & Algorithmic Trading Platform**
+# 🔱 TRISHUL PRO v2.0
+
+**Advanced Indian Stock Market Intelligence & Algorithmic Trading Platform**
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- PostgreSQL 14+
+- Redis 6+
+
+### Installation
+
+```bash
+# Clone repository
+git clone https://github.com/charanaruna05/Trishul-pro.git
+cd Trishul-pro
+
+# Install dependencies
+npm install
+
+# Setup environment
+cp .env.example .env
+# Edit .env with your broker credentials
+
+# Start development
+npm run dev
+```
+
+### With Docker
+
+```bash
+docker-compose up --build
+```
+
+## 📂 Project Structure
+
+```
+Trishul-pro/
+├── server/                 # Express backend
+│   ├── routes/            # API endpoints
+│   ├── services/          # Business logic
+│   ├── middleware/        # Auth, validation
+│   └── index.js           # Server entry
+├── src/                   # React frontend
+│   ├── pages/            # Page components
+│   ├── components/       # Reusable UI
+│   ├── App.jsx
+│   └── index.css
+├── public/               # Static assets
+├── api/                  # Vercel functions
+├── config/               # Configuration files
+└── package.json
+```
+
+## 🔑 Features
+
+✅ Multi-broker support (Angel One, Shoonya, Zerodha)  
+✅ Real-time market data & WebSocket streaming  
+✅ 9-grid scanner & sector heatmap  
+✅ JWT authentication + TOTP 2FA  
+✅ Order management & portfolio tracking  
+✅ Admin dashboard with analytics  
+✅ Responsive mobile UI (430px)  
+✅ Production-ready deployment  
+
+## 🛠️ API Documentation
+
+### Authentication
+```bash
+POST /api/auth/login
+POST /api/auth/register
+POST /api/auth/verify
+```
+
+### Market Data
+```bash
+GET /api/market/indices
+GET /api/market/sectors
+GET /api/market/stock/:symbol
+```
+
+### Trading
+```bash
+POST /api/trade/order/place
+POST /api/trade/order/cancel
+GET  /api/broker/holdings
+GET  /api/broker/positions
+```
+
+## 🔐 Security
+
+- ✅ Environment variables for credentials
+- ✅ JWT token authentication
+- ✅ Rate limiting on API
+- ✅ Helmet.js for security headers
+- ✅ CORS properly configured
+- ✅ Password hashing with bcryptjs
+
+## 📊 Live Link
+
+[https://trishul-pro-three.vercel.app](https://trishul-pro-three.vercel.app)
+
+## 📝 License
+
+MAA AADISHAKTI © 2026
 
 ---
 
-### 🚀 प्रोजेक्ट का उद्देश्य (Overview)
-Trishul Pro एक एडवांस्ड ट्रेडिंग डैशबोर्ड है जिसे भारतीय शेयर बाजार के लाइव डेटा विश्लेषण के लिए बनाया गया है। यह प्लेटफॉर्म ट्रेडर्स को सटीक सिग्नल्स, सेक्टर एनालिसिस और पावर कंट्रोल पैनल प्रदान करता है।
-
-### 📂 प्रोजेक्ट स्ट्रक्चर (System Structure)
-यह प्रोजेक्ट पूरी तरह से "Root" आधारित है ताकि एक्सेस करने में कोई एरर न आए:
-
-* **index.html** - मुख्य प्रवेश द्वार (Secure Login)
-* **page2_home.html** - मार्केट डैशबोर्ड और सेक्टर हीटमैप
-* **page3_signal.html** - लाइव 9-ग्रिड मार्केट स्कैनेर्स
-* **page4_power.html** - कंट्रोल पैनल
-* **page5_chart.html** - ट्रेडिंग व्यू चार्ट्स और इंडिकेटर्स
-* **page6_watchlist.html** - पर्सनल वॉचलिस्ट मैनेजमेंट
-* **page7_admin.html** - मास्टर कंट्रोल और एडमिन सेटिंग्स
-* **common.js / shared.css** - ऐप का मुख्य लॉजिक और डिजाइन
-
-### 🛠️ तकनीकी विशेषताएँ (Tech Stack)
-* **Frontend:** HTML5, CSS3, JavaScript (React-inspired logic)
-* **APIs:** Angel One (SmartAPI) / Shoonya (Finvasia) Integration
-* **Deployment:** GitHub Pages (2026 Edition)
-
-### 📈 लाइव एक्सेस (Live Link)
-आप अपना लाइव प्रोजेक्ट यहाँ देख सकते हैं:
-[https://charanaruna05.github.io/trishul-pro/](https://charanaruna05.github.io/trishul-pro/)
-
----
-© 2026 MAA AADISHAKTI — TRISHUL PRO | Developed by Arun
+**Developed by Arun** 🚀
